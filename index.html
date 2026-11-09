@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philippine Explorer Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-brand">
+      <!-- Official Bagong Pilipinas Logo with 4-second Shine -->
+      <div class="logo-wrapper">
+        <svg class="bp-logo" viewBox="0 0 400 450" xmlns="http://www.w3.org/2000/svg">
+          <!-- 3 Stars -->
+          <polygon points="200,25 204,37 217,37 207,44 210,56 200,48 190,56 193,44 183,37 196,37" fill="#fcd116"/>
+          <polygon points="120,60 124,72 137,72 127,79 130,91 120,83 110,91 113,79 103,72 116,72" fill="#fcd116"/>
+          <polygon points="280,60 284,72 297,72 287,79 290,91 280,83 270,91 273,79 263,72 276,72" fill="#fcd116"/>
+
+          <!-- Yellow Sun Rays -->
+          <path d="M200,80 L212,170 L245,100 L230,185 L285,135 L242,200 L315,185 L250,215 L325,245 L200,280 L75,245 L150,215 L85,185 L158,200 L115,135 L170,185 L155,100 L188,170 Z" fill="#fcd116"/>
+          <circle cx="200" cy="240" r="75" fill="#fcd116"/>
+
+          <!-- Blue & Red Interlocking Weave Shape -->
+          <path d="M98,125 C140,200 240,250 315,225 C260,330 140,330 83,220 C75,190 85,150 98,125 Z" fill="#0038a8"/>
+          <path d="M107,315 C170,360 260,350 305,305 C250,380 150,370 107,315 Z" fill="#0038a8"/>
+          <path d="M302,125 C260,200 160,250 85,225 C140,330 260,330 317,220 C325,190 315,150 302,125 Z" fill="#ce1126"/>
+          <path d="M293,315 C230,360 140,350 95,305 C150,380 250,370 293,315 Z" fill="#ce1126"/>
+
+          <!-- White Lines -->
+          <path d="M85,225 C160,250 260,200 302,125" stroke="#ffffff" stroke-width="4" fill="none"/>
+          <path d="M315,225 C240,250 140,200 98,125" stroke="#ffffff" stroke-width="4" fill="none"/>
+          <path d="M90,300 C150,350 250,350 310,300" stroke="#ffffff" stroke-width="4" fill="none"/>
+
+          <!-- "BAGONG PILIPINAS" Text -->
+          <text x="200" y="430" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-style="italic" font-size="34" fill="#0038a8" text-anchor="middle" letter-spacing="1">BAGONG PILIPINAS</text>
+        </svg>
+      </div>
+
+      <div>
+        <h1>Philippine Explorer</h1>
+        <p class="tagline">Official Regional Browser & Live Travel Dashboard</p>
+      </div>
+    </div>
+    <div class="header-status">
+      <span class="status-dot"></span> Live Data Online
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+
+    <!-- HEADLINE FEATURE: Region & Cities Browser (PSGC API) -->
+    <section class="headline-banner">
+      <div class="headline-badge">Headline Feature</div>
+      <div class="section-header">
+        <h2>Philippine Standard Geographic Browser (PSGC)</h2>
+        <p>Click any region card below to view all cities and municipalities under it.</p>
+      </div>
+      
+      <button id="btn-load-regions" class="btn btn-secondary">Reload Region List</button>
+      
+      <!-- Regions Grid -->
+      <div id="regions-container" class="regions-grid">
+        <p class="loading-state">Loading Philippine regions...</p>
+      </div>
+    </section>
+
+    <!-- WIDGETS GRID -->
+    <div class="widgets-grid">
+
+      <!-- Widget 1: City Weather Search -->
+      <section class="widget-card highlight-card">
+        <div class="widget-header">
+          <span class="widget-icon">☀️</span>
+          <h3>PH City Live Weather</h3>
+        </div>
+        <div class="widget-body">
+          <p class="widget-desc">Search live weather in any PH city:</p>
+          <input type="text" id="weather-city-input" placeholder="e.g. Cebu, Davao, Baguio">
+          <div id="weather-content" class="interactive-result">Loading weather...</div>
+        </div>
+        <div class="widget-footer">
+          <button id="btn-search-weather" class="btn btn-action">Search Weather</button>
+        </div>
+      </section>
+
+      <!-- Widget 2: Real Travel Photo Search (Openverse API) -->
+      <section class="widget-card">
+        <div class="widget-header">
+          <span class="widget-icon">📷</span>
+          <h3>PH Destination Photo Search</h3>
+        </div>
+        <div class="widget-body">
+          <p class="widget-desc">Search real photos of PH locations:</p>
+          <input type="text" id="photo-input" placeholder="e.g. Boracay, Palawan">
+          <div id="photo-results" class="interactive-result">
+            <p class="widget-desc">Type a location above and click search.</p>
+          </div>
+        </div>
+        <div class="widget-footer">
+          <button id="btn-search-photo" class="btn btn-outline">Search Travel Photos</button>
+        </div>
+      </section>
+
+      <!-- Widget 3: Live Fuel & Gas Prices -->
+      <section class="widget-card">
+        <div class="widget-header">
+          <span class="widget-icon">⚓</span>
+          <h3>PH Fuel & LPG Prices</h3>
+        </div>
+        <div id="fuel-content" class="widget-body">Loading fuel prices...</div>
+        <div class="widget-footer">
+          <button id="btn-refresh-fuel" class="btn btn-outline">Refresh Prices</button>
+        </div>
+      </section>
+
+      <!-- Widget 4: UP High-Resolution Hazard Maps (eGov PH Service) -->
+      <section class="widget-card">
+        <div class="widget-header">
+          <span class="widget-icon">🌊</span>
+          <h3>UP High-Res Hazard Maps</h3>
+        </div>
+        <div class="widget-body">
+          <p class="widget-desc">High-resolution hazard zones (eGov PH & UP NOAH):</p>
+          <div id="hazard-content">Loading hazard mapping data...</div>
+        </div>
+        <div class="widget-footer">
+          <a href="https://noah.up.edu.ph/know-your-hazards" target="_blank" class="btn btn-action" style="display:block; text-align:center; text-decoration:none;">
+            Launch UP NOAH Portal
+          </a>
+        </div>
+      </section>
+
+      <!-- Widget 5: Emergency Hotlines -->
+      <section class="widget-card">
+        <div class="widget-header">
+          <span class="widget-icon">🚨</span>
+          <h3>PH Emergency Hotlines</h3>
+        </div>
+        <div id="hotlines-content" class="widget-body">Loading hotlines...</div>
+        <div class="widget-footer">
+          <button id="btn-refresh-hotlines" class="btn btn-outline">Reload Hotlines</button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer Credits -->
+  <footer class="app-footer">
+    <p>Data provided by keyless public APIs & portals:</p>
+    <ul>
+      <li><a href="https://psgc.gitlab.io/api/" target="_blank">PSGC API</a></li>
+      <li><a href="https://open-meteo.com/" target="_blank">Open-Meteo API</a></li>
+      <li><a href="https://api.openverse.org/" target="_blank">Openverse API</a></li>
+      <li><a href="https://noah.up.edu.ph/" target="_blank">UP NOAH / GeoRiskPH</a></li>
+    </ul>
+  </footer>
+
+  <!-- jQuery loaded BEFORE script.js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
